@@ -23,6 +23,7 @@ java {
 
 repositories {
   mavenCentral()
+  gradlePluginPortal()
 }
 
 ext.webjarsFontawesomeVersion = "4.7.0"
