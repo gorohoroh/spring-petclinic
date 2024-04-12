@@ -40,7 +40,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
  */
 @Controller
 @RequestMapping("/owners/{ownerId}")
-class PetController {
+private class PetController {
 
 	private static final String VIEWS_PETS_CREATE_OR_UPDATE_FORM = "pets/createOrUpdatePetForm";
 
@@ -133,14 +133,13 @@ class PetController {
 	public String processUpdateForm(@Valid Pet pet, BindingResult result, Owner owner, ModelMap model,
 			RedirectAttributes redirectAttributes) {
 
-		String petName = pet.getName();
+		String petName = pet.getName().toString();
 
 		// checking if the pet name already exist for the owner
 		if (StringUtils.hasText(petName)) {
 			Pet existingPet = owner.getPet(petName.toLowerCase(), false);
-			if (existingPet != null && existingPet.getId() != pet.getId()) {
+			if (existingPet != null && existingPet.getId() != pet.getId())
 				result.rejectValue("name", "duplicate", "already exists");
-			}
 		}
 
 		LocalDate currentDate = LocalDate.now();

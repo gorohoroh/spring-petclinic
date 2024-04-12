@@ -70,6 +70,7 @@ public class MavenWrapperDownloader {
                     }
                 } catch (IOException e) {
                     // Ignore ...
+                    throw new RuntimeException(e);
                 }
             }
         }
