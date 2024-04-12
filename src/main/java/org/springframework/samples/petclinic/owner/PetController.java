@@ -133,7 +133,7 @@ class PetController {
 	public String processUpdateForm(@Valid Pet pet, BindingResult result, Owner owner, ModelMap model,
 			RedirectAttributes redirectAttributes) {
 
-		String petName = pet.getName().toString();
+		String petName = pet.getName();
 
 		// checking if the pet name already exist for the owner
 		if (StringUtils.hasText(petName)) {
