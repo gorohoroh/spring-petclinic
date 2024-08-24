@@ -17,6 +17,9 @@ package org.springframework.samples.petclinic.owner;
 
 import java.util.List;
 import java.util.Map;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -49,6 +52,8 @@ class OwnerController {
 
 	private final OwnerRepository owners;
 
+	Logger logger = LoggerFactory.getLogger(OwnerController.class);
+
 	public OwnerController(OwnerRepository clinicService) {
 		this.owners = clinicService;
 	}
@@ -78,6 +83,7 @@ class OwnerController {
 		}
 
 		this.owners.save(owner);
+		logger.info("Added a new owner {} ({} {})", owner.getId(), owner.getFirstName(), owner.getLastName());
 		redirectAttributes.addFlashAttribute("message", "New Owner Created");
 		return "redirect:/owners/" + owner.getId();
 	}
@@ -145,6 +151,7 @@ class OwnerController {
 
 		owner.setId(ownerId);
 		this.owners.save(owner);
+		logger.info("Updated owner {} ({} {})", owner.getId(), owner.getFirstName(), owner.getLastName());
 		redirectAttributes.addFlashAttribute("message", "Owner Values Updated");
 		return "redirect:/owners/{ownerId}";
 	}
