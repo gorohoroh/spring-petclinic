@@ -20,7 +20,6 @@ import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -148,11 +147,11 @@ class OwnerController {
 			redirectAttributes.addFlashAttribute("error", "There was an error in updating the owner.");
 			return VIEWS_OWNER_CREATE_OR_UPDATE_FORM;
 		}
-
 		owner.setId(ownerId);
 		this.owners.save(owner);
-		logger.info("Updated owner {} ({} {})", owner.getId(), owner.getFirstName(), owner.getLastName());
-		redirectAttributes.addFlashAttribute("message", "Owner Values Updated");
+		logger.info("Updated owner {} ({} {}, phone number {})", owner.getId(), owner.getFirstName(), owner.getLastName(), owner.getTelephone());
+		logger.info("Updated owner (object): " + owner);
+		redirectAttributes.addFlashAttribute("message", "Owner updated");
 		return "redirect:/owners/{ownerId}";
 	}
 
