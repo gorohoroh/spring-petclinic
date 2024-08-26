@@ -146,11 +146,11 @@ public class Owner extends Person {
 	public String toString() {
 		return new ToStringCreator(this).append("id", this.getId())
 			.append("new", this.isNew())
-			.append("lastName", this.getLastName())
-			.append("firstName", this.getFirstName())
-			.append("address", this.address)
+			.append("lastName", this.getLastName().toCharArray()[0] + "*".repeat(this.getLastName().length()-1))
+			.append("firstName", this.getFirstName().toCharArray()[0] + "*".repeat(this.getFirstName().length()-1))
+			.append("address", "Address hidden")
 			.append("city", this.city)
-			.append("telephone", this.telephone)
+			.append("telephone", "*".repeat(10))
 			.toString();
 	}
 
