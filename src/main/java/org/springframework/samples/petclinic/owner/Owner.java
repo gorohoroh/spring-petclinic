@@ -18,6 +18,9 @@ package org.springframework.samples.petclinic.owner;
 import java.util.ArrayList;
 import java.util.List;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 import org.springframework.core.style.ToStringCreator;
 import org.springframework.samples.petclinic.model.Person;
 import org.springframework.util.Assert;
@@ -42,13 +45,21 @@ import jakarta.validation.constraints.NotBlank;
  * @author Michael Isvy
  * @author Oliver Drotbohm
  */
+@Getter
+@Setter
 @Entity
 @Table(name = "owners")
+@ToString(callSuper = true)
 public class Owner extends Person {
 
 	@Column(name = "address")
 	@NotBlank
 	private String address;
+
+	@ToString.Include(name = "address")
+	private String addressMasked() {
+		return "[Address hidden]";
+	}
 
 	@Column(name = "city")
 	@NotBlank
@@ -59,38 +70,16 @@ public class Owner extends Person {
 	@Pattern(regexp = "\\d{10}", message = "Telephone must be a 10-digit number")
 	private String telephone;
 
+	@ToString.Include(name = "telephone")
+	private String telephoneMasked() {
+		return "[Phone hidden]";
+	}
+
+
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name = "owner_id")
 	@OrderBy("name")
 	private List<Pet> pets = new ArrayList<>();
-
-	public String getAddress() {
-		return this.address;
-	}
-
-	public void setAddress(String address) {
-		this.address = address;
-	}
-
-	public String getCity() {
-		return this.city;
-	}
-
-	public void setCity(String city) {
-		this.city = city;
-	}
-
-	public String getTelephone() {
-		return this.telephone;
-	}
-
-	public void setTelephone(String telephone) {
-		this.telephone = telephone;
-	}
-
-	public List<Pet> getPets() {
-		return this.pets;
-	}
 
 	public void addPet(Pet pet) {
 		if (pet.isNew()) {
@@ -140,18 +129,6 @@ public class Owner extends Person {
 			}
 		}
 		return null;
-	}
-
-	@Override
-	public String toString() {
-		return new ToStringCreator(this).append("id", this.getId())
-			.append("new", this.isNew())
-			.append("lastName", this.getLastName())
-			.append("firstName", this.getFirstName())
-			.append("address", this.address)
-			.append("city", this.city)
-			.append("telephone", this.telephone)
-			.toString();
 	}
 
 	/**
