@@ -15,8 +15,7 @@
  */
 package org.springframework.samples.petclinic.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.ToString;
@@ -34,8 +33,8 @@ import lombok.Setter;
 public class Person extends BaseEntity {
 
 	@Column(name = "first_name")
-	@NotBlank
-	private String firstName;
+	@Convert(converter = FirstNameToStringConverter.class)
+	private FirstName firstName;
 
 	@ToString.Include(name = "firstName")
 	private String firstNameMasked() {
